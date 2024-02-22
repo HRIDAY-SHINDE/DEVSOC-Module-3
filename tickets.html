@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theatre Booking</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 80%;
+        margin: 20px auto;
+    }
+    .seats {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .seat {
+        width: 40px;
+        height: 40px;
+        background-color: #ccc;
+        margin: 5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+    .seat.selected {
+        background-color: #f00;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Theatre Booking</h2>
+    <div class="seats">
+        <!-- Assume there are 25 seats in the theatre -->
+        <!-- You can dynamically generate these seats using JavaScript -->
+        <!-- For simplicity, I'm hardcoding the seats here -->
+        <!-- You can assign unique IDs or data attributes to each seat -->
+        <!-- to track their availability and selection -->
+        <div class="seat">1</div>
+        <div class="seat">2</div>
+        <div class="seat">3</div>
+        <div class="seat">4</div>
+        <div class="seat">5</div>
+        <br>
+        <div class="seat">6</div>
+        <div class="seat">7</div>
+        <div class="seat">8</div>
+        <div class="seat">9</div>
+        <div class="seat">10</div><br>
+        <div class="seat">11</div>
+        <div class="seat">12</div>
+        <div class="seat">13</div>
+        <div class="seat">14</div>
+        <div class="seat">15</div><br>
+        <div class="seat">16</div>
+        <div class="seat">17</div>
+        <div class="seat">18</div>
+        <div class="seat">19</div>
+        <div class="seat">20</div><br>
+        
+        
+    </div>
+    <p>Selected Seats: <span id="selected-seats">None</span></p>
+</div>
+
+<script>
+    const seats = document.querySelectorAll('.seat');
+    const selectedSeats = [];
+
+    seats.forEach(seat => {
+        seat.addEventListener('click', () => {
+            if (!selectedSeats.includes(seat)) {
+                selectedSeats.push(seat);
+                seat.classList.add('selected');
+            } else {
+                const index = selectedSeats.indexOf(seat);
+                selectedSeats.splice(index, 1);
+                seat.classList.remove('selected');
+            }
+            updateSelectedSeats();
+        });
+    });
+
+    function updateSelectedSeats() {
+        const selectedSeatsText = selectedSeats.length > 0 ? selectedSeats.map(seat => seat.textContent).join(', ') : 'None';
+        document.getElementById('selected-seats').textContent = selectedSeatsText;
+    }
+</script>
+</body>
+</html>
