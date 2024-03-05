@@ -1,6 +1,8 @@
 // import { decrypt } from "dotenv";
 import jwt from "jsonwebtoken";
 import Movie from "../models/Movie.js";
+import Admin from "../models/Admin.js";
+import mongoose from "mongoose";
 export const addMovie=async(req,res,next)=>{
     
     const extractedToken=req.headers.authorization.split(" ")[1];//Bearer token
@@ -9,7 +11,7 @@ export const addMovie=async(req,res,next)=>{
         return res.status(404).json({message:"TOken not found."});
         
     }
-    console.log(extractedToken);
+    
     let adminId;
     //verify token
 
@@ -35,7 +37,15 @@ export const addMovie=async(req,res,next)=>{
     try{
         movie = new Movie({title,description,releaseDate:new Date(`${releaseDate}`)
             ,title,featured,actors,admin: adminId,posterUrl,description});
-            movie=await movie.save();
+
+          const session=   await mongoose.startSession();
+          const adminUser=await Admin.findById(adminId);
+          session.startTransaction();
+          await movie.save({session});
+          adminUser.addedMovies.push(movie);
+          await adminUser.save({session});
+          await session.commitTransaction();
+            //  movie=await movie.save();
 
     }catch(err){
         console.log(err);

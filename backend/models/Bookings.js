@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 const bookingsSchema=new mongoose.Schema({
     movie:{
-        type:String,
+        type:mongoose.Types.ObjectId,
+        ref:"Movie",
         required:true,
 
     },
@@ -14,9 +15,11 @@ const bookingsSchema=new mongoose.Schema({
         required:true,
     },
     user:{
-        type:String,
+         
+        type:mongoose.Types.ObjectId,
+        ref:"User",
         required:true,
     },
-
+  
 });
 export default mongoose.model("Bookings",bookingsSchema);

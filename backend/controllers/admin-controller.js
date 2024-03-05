@@ -70,3 +70,21 @@ export const adminLogin=async(req, res, next)=>{
 
     return res.status(200).json({message:"Authentication complete",token,id:existingAdmin._id});
     };
+    export const getAdmins= async(req,res,next)=>{
+        let admins;
+        try{
+            admins=await Admin.find();
+
+        }catch(err)
+        {
+            return console.log(err);
+        }
+        if(!admins)
+        
+        {return res.status(500).json({messge:"Internal server error"});
+    }
+    
+        return res.status(200).json({admins});
+    
+
+    }
